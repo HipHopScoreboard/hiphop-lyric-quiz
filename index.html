@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>Hip Hop Lyric Quiz</title>
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+		
+		<link rel="stylesheet" href="Main.css" type="text/css" />
+		<script src="jquery-1.10.2.min.js"></script>
+		<script src="mycode.js"></script>
+
+	<script>
+
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.open("GET","database.xml",false);
+xmlhttp.send();
+xmlDoc=xmlhttp.responseXML; 
+
+x=xmlDoc.getElementsByTagName("lyric");
+j=x.length-1;
+
+function displayLyric()
+{
+	$('#correct').hide();
+	$('#incorrect').hide();
+	$("#main").slideDown("slow");
+	
+	document.getElementById('option1').disabled = false;
+	document.getElementById('option2').disabled = false;
+	document.getElementById('option3').disabled = false;
+	document.getElementById('option4').disabled = false;
+	
+	i=Math.floor((Math.random()*j)+1);
+	lyric1=(x[i].getElementsByTagName("lyric1")[0].childNodes[0].nodeValue);
+	lyric2=(x[i].getElementsByTagName("lyric2")[0].childNodes[0].nodeValue);
+	lyric3=(x[i].getElementsByTagName("lyric3")[0].childNodes[0].nodeValue);
+	lyric4=(x[i].getElementsByTagName("lyric4")[0].childNodes[0].nodeValue);
+	lyric5=(x[i].getElementsByTagName("lyric5")[0].childNodes[0].nodeValue);
+	option1=(x[i].getElementsByTagName("option1")[0].childNodes[0].nodeValue);
+	option2=(x[i].getElementsByTagName("option2")[0].childNodes[0].nodeValue);
+	option3=(x[i].getElementsByTagName("option3")[0].childNodes[0].nodeValue);
+	option4=(x[i].getElementsByTagName("option4")[0].childNodes[0].nodeValue);
+	artist=(x[i].getElementsByTagName("artist")[0].childNodes[0].nodeValue);
+	song=(x[i].getElementsByTagName("song")[0].childNodes[0].nodeValue);
+	document.getElementById("lyric1").innerHTML=lyric1;
+	document.getElementById("lyric2").innerHTML=lyric2;
+	document.getElementById("lyric3").innerHTML=lyric3;
+	document.getElementById("lyric4").innerHTML=lyric4;
+	document.getElementById("lyric5").innerHTML=lyric5;
+	document.getElementById("option1").innerHTML=option1;
+	document.getElementById("option2").innerHTML=option2;
+	document.getElementById("option3").innerHTML=option3;
+	document.getElementById("option4").innerHTML=option4;
+	document.getElementById("cArtist").innerHTML=artist;
+	document.getElementById("cSong").innerHTML=song;
+	document.getElementById("iArtist").innerHTML=artist;
+	document.getElementById("iSong").innerHTML=song;
+}
+
+function submitChoice(choice)
+{
+	//document.getElementById("btnPlaceOrder").disabled = true; 
+	document.getElementById('option1').disabled = true;
+	document.getElementById('option2').disabled = true;
+	document.getElementById('option3').disabled = true;
+	document.getElementById('option4').disabled = true;
+	
+	$('#main').fadeOut(1000);
+	if (choice == artist) {
+		$('#correct').delay(1000).fadeIn(1000);
+	}
+	else {
+		$('#incorrect').delay(1000).fadeIn(1000);
+	}
+}
+</script>
+</head>
+<body onload="displayLyric()">
+
+	<div id='main'>
+		<p id='lyric1'> </p>
+		<p id='lyric2'> </p>
+		<p id='lyric3'> </p>
+		<p id='lyric4'> </p>
+		<p id='lyric5'> </p>
+		<button class='myButton' id='option1' onclick='submitChoice(option1)'> </button>
+		<button class='myButton' id='option2' onclick='submitChoice(option2)'> </button>
+		<button class='myButton' id='option3' onclick='submitChoice(option3)'> </button>
+		<button class='myButton' id='option4' onclick='submitChoice(option4)'> </button>
+		
+	</div>
+	<div id='correct'>
+		<p>Correct</p>
+		<p id='cArtist'> </p>
+		<p id='cSong'> </p>
+		<button class='myButton' id='nextLyric' onclick='displayLyric()'>Next</button>
+	</div>
+	<div id='incorrect'>
+		<p>Incorrect</p>
+		<p id='iArtist'> </p>
+		<p id='iSong'> </p>
+		<button class='myButton' id='nextLyric2' onclick='displayLyric()'>Next</button>
+	</div>
+
+</body>
+</html>
